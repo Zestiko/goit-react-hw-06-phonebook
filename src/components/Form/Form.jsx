@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
+import { addContact } from 'redux/contactsSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
-export const Form = ({ onSubmit }) => {
+export const Form = () => {
   const [name, setName] = useState('');
   const [number, setnumber] = useState('');
+  const contacts = useSelector(state => state.contacts);
+  
+
+  const dispatch = useDispatch();
+  const addContactToState = contact => dispatch(addContact(contact));
 
   const handelChange = e => {
     const { name, value } = e.target;
@@ -25,10 +32,23 @@ export const Form = ({ onSubmit }) => {
     setnumber('');
   };
 
+
   const handelSubmit = e => {
     e.preventDefault();
-    onSubmit(name, number);
-    reset();
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+const includeName = contacts.find(user => user.name === name);
+console.log(includeName);
+    if (includeName) {
+      alert(`${contact.name} is already in contacs`);
+      
+    } else {
+      addContactToState(contact);
+      reset();
+    }
   };
   const inputNameId = nanoid();
   const inputTelId = nanoid();
@@ -65,67 +85,6 @@ export const Form = ({ onSubmit }) => {
   );
 };
 
-// export class Form extends Component {
-//   state = {
-//     name: '',
-//     number: '',
-//   };
-
-//   handelChange = e => {
-//     const { name, value } = e.target;
-//     this.setState({ [name]: value });
-//   };
-
-//   handelSubmit = e => {
-//     e.preventDefault();
-//     const { name, number } = this.state;
-//     this.props.onSubmit(name, number);
-
-//     this.reset();
-//   };
-
-//   reset = () => {
-//     this.setState({ name: '', number: '' });
-//   };
-
-//   render() {
-//     const inputNameId = nanoid();
-//     const inputTelId = nanoid();
-//     const { name, number } = this.state;
-//     return (
-//       <form onSubmit={this.handelSubmit}>
-//         <label htmlFor={inputNameId}>
-//           Name
-//           <input
-//             id={inputNameId}
-//             onChange={this.handelChange}
-//             value={name}
-//             type="text"
-//             name="name"
-//             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-//             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-//             required
-//           />
-//         </label>
-//         <label htmlFor={inputTelId}>
-//           Number
-//           <input
-//             id={inputTelId}
-//             onChange={this.handelChange}
-//             value={number}
-//             type="tel"
-//             name="number"
-//             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-//             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-//             required
-//           />
-//         </label>
-//         <button type="submit">Add contac</button>
-//       </form>
-//     );
-//   }
-// }
-
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+// Form.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };

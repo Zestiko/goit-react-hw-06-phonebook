@@ -1,8 +1,12 @@
 import { nanoid } from 'nanoid';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSerch } from 'redux/filterSlice';
 
-export const Filter = ({ value, onChange }) => {
+export const Filter = () => {
+  const filterValue = useSelector(state => state.filter)
+  const dispatch = useDispatch();
   const filterID = nanoid();
   return (
     <>
@@ -10,9 +14,9 @@ export const Filter = ({ value, onChange }) => {
         Find contac by name
         <input
           type="text"
-          value={value}
+          value={filterValue}
           name="filter"
-          onChange={onChange}
+          onChange={(e) => dispatch(setSerch(e.target.value))}
           id={filterID}
         />
       </label>
@@ -20,7 +24,7 @@ export const Filter = ({ value, onChange }) => {
   );
 };
 
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
+// Filter.propTypes = {
+//   value: PropTypes.string.isRequired,
+//   onChange: PropTypes.func.isRequired,
+// };
