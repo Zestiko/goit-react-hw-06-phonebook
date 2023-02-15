@@ -85,6 +85,12 @@ console.log(includeName);
   );
 };
 
-// Form.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };
+Form.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string,
+      number: PropTypes.string,
+    })
+  ),
+};
