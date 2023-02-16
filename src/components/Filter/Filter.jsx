@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSerch } from 'redux/filterSlice';
 
 export const Filter = () => {
-  const filterValue = useSelector(state => state.filter)
+  const filterValue = useSelector(state => state.filter.filter)
   const dispatch = useDispatch();
   const filterID = nanoid();
   return (
