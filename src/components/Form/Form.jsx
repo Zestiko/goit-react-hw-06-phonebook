@@ -8,9 +8,14 @@ export const Form = () => {
   const [name, setName] = useState('');
   const [number, setnumber] = useState('');
   const contacts = useSelector(state => state.contacts);
-  
 
   const dispatch = useDispatch();
+  const createContact = ({ name, number }) => ({
+    id: nanoid(),
+    name,
+    number,
+  });
+
   const addContactToState = contact => dispatch(addContact(contact));
 
   const handelChange = e => {
@@ -32,21 +37,13 @@ export const Form = () => {
     setnumber('');
   };
 
-
   const handelSubmit = e => {
     e.preventDefault();
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-const includeName = contacts.find(user => user.name === name);
-console.log(includeName);
+    const includeName = contacts.find(user => user.name === name);
     if (includeName) {
-      alert(`${contact.name} is already in contacs`);
-      
+      alert(`${name} is already in contacs`);
     } else {
-      addContactToState(contact);
+      addContactToState(createContact({ name, number }));
       reset();
     }
   };

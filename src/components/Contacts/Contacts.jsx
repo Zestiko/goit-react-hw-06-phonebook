@@ -18,7 +18,6 @@ export const Contacts = () => {
             <li key={id}>
               {name}: {number}
               <button key={id} type="button" onClick={() => handleDelete(id)}>
-                {' '}
                 delete
               </button>
             </li>
