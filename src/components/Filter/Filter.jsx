@@ -2,10 +2,10 @@ import { nanoid } from 'nanoid';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSerch } from 'redux/filterSlice';
+import { getFilterValue, setSerch } from 'redux/filterSlice';
 
 export const Filter = () => {
-  const filterValue = useSelector(state => state.filter.filter)
+  const filterValue = useSelector(getFilterValue)
   const dispatch = useDispatch();
   const filterID = nanoid();
   return (

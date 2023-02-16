@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact, getContactsValue } from 'redux/contactsSlice';
 import PropTypes from 'prop-types';
+import { getFilterValue } from 'redux/filterSlice';
 export const Contacts = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
-  const filter = useSelector(state => state.filter.filter);
+  const contacts = useSelector(getContactsValue);
+  const filter = useSelector(getFilterValue);
   const dispatch = useDispatch();
   const handleDelete = id => dispatch(deleteContact(id));
   const filterContacts = contacts.filter(contact =>
